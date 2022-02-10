@@ -7,7 +7,7 @@ import api from "../utils/connectApi/axios";
 import logoGlobo from "../utils/images/logo-academy.png";
 import styles from "../styles/homepage.module.css";
 
-const Home: NextPage = () => {
+const HomePage: NextPage = () => {
   const [listNews, setListNews] = useState([]);
   const [fastNews, setFastNews] = useState([]);
 
@@ -209,4 +209,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default HomePage;
