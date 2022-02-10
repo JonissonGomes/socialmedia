@@ -91,7 +91,7 @@
 
 
 .navBar {
-    background-color: red;
+    background-color: crimson;
     width: 100%;
     height: 60px;
     margin: 0;
@@ -121,8 +121,23 @@
     background-color: rgb(255, 255, 255);
 }
 
+.inputSearch {
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 40px;
+    margin-left: 4px;
+    background-color: crimson;
+    border: none;
+    border-radius: 4px;
+}
+
+.inputSearchText {
+    color: white;
+    cursor: pointer;
+}
+
 .contentMain {
-    display: grid;
     margin-top: 2%;
     margin-left: 26.4%;
     margin-right: 20%;
@@ -140,9 +155,8 @@
     height: 300px;
     margin-top: 2%;
     margin-bottom: 2%;
-    padding-top: 8px;
-    padding-bottom: 8px;
     border: 1px solid lightgray;
+    border-top-color: white;
     border-left-color: white;
     border-right-color: white;
     display: flex;
