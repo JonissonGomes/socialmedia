@@ -12,7 +12,8 @@
 }
 
 .boxUrl {
-    margin-left: 23.4%;
+    margin-left: 20vw;
+    width: 100vw;
     height: 90px;
     display: flex;
     align-items: center;
@@ -72,8 +73,8 @@
 
 .boxRight {
     display: flex;
-    width: 20%;
-    margin-left: 30%;
+    width: 48vw;
+    margin-left: 24vw;
     align-items: center;
 }
 
@@ -241,10 +242,11 @@
 
 .newsFasterBox {
     background-color: rgb(255, 245, 245);
-    width: 24vw;
+    align-content: center;
+    height: 134vh;
+    width: 50rem;
     margin-top: 2%;
     margin-left: 4%;
-    padding-right: 28px;
     border-radius: 4px;
     border: 1px solid rgb(238, 238, 238);
 }
