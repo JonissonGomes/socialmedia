@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,14 +8,16 @@ import logoGlobo from "../utils/images/logo-academy.png";
 import styles from "../styles/homepage.module.css";
 
 const Home: NextPage = () => {
-
   const [listNews, setListNews] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const [urlApi, setUrlApi] = useState(
+    "https://newsapi.org/v2/everything?sources=globo&sortBy=popularity&apiKey=55a1f8015d004ad1905a7a44f4c152e9"
+  );
 
   useEffect(() => {
     api
-      .get(
-        `https://newsapi.org/v2/everything?sources=globo&sortBy=popularity&apiKey=55a1f8015d004ad1905a7a44f4c152e9`
-      )
+      .get(`${urlApi}`)
       .then((response) => {
         console.log("Informações encontradas");
         setListNews(response.data.articles);
@@ -25,6 +27,25 @@ const Home: NextPage = () => {
         console.error("ops! ocorreu um erro : " + err);
       });
   }, []);
+
+  function searchTopic(word: string) {
+    let newParam = `q=${word}&`;
+    let request = `https://newsapi.org/v2/everything?${newParam}sources=globo&sortBy=popularity&apiKey=55a1f8015d004ad1905a7a44f4c152e9`;
+    api
+      .get(`${request}`)
+      .then((response) => {
+        setListNews(response.data.articles);
+      })
+      .catch((err) => {
+        console.error("ops! ocorreu um erro : " + err);
+      });
+  }
+
+  const handleChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setSearch(event.target.value);
+  };
 
   function formatDate() {
     let dateParam = new Date(),
@@ -92,7 +113,20 @@ const Home: NextPage = () => {
         </section>
 
         <section className={styles.logo}>
-          <input className={styles.input} type="text" placeholder="Buscar" />
+          <input
+            className={styles.input}
+            type="text"
+            placeholder="Buscar"
+            value={search}
+            onChange={handleChange}
+          />
+          <button
+            className={styles.inputSearch}
+            type="submit"
+            onClick={() => searchTopic(search)}
+          >
+            <p className={styles.inputSearchText}>buscar</p>
+          </button>
         </section>
       </div>
 
@@ -100,26 +134,28 @@ const Home: NextPage = () => {
         <h1 className={styles.topic}>Notícias de hoje</h1>
 
         <hr className={styles.separator} />
-        {listNews.map((noticias, index) => (
-          <>
-            <div key={index} className={styles.news}>
-              <section className={styles.imageContent}>
-                <Image src={noticias.urlToImage} width={300} height={200} />
-              </section>
-              <section className={styles.newsContent}>
-                <p className={styles.titleNews}>{noticias.title}</p>
-                <p className={styles.author}>{noticias.author}</p>
-                <p className={styles.dateNews}>
-                  {formatDate(noticias.publishedAt)}
-                </p>
-                <p className={styles.contentNews}>{noticias.content}</p>
-                <Link href={noticias.url}>
+        <div className={styles.contentBox}>
+          {listNews.map((noticias, index) => (
+            <>
+              <div key={index} className={styles.news}>
+                <section className={styles.imageContent}>
+                  <Image src={noticias.urlToImage} width={300} height={200} />
+                </section>
+                <section className={styles.newsContent}>
+                  <p className={styles.titleNews}>{noticias.title}</p>
+                  <p className={styles.author}>{noticias.author}</p>
+                  <p className={styles.dateNews}>
+                    {formatDate(noticias.publishedAt)}
+                  </p>
+                  <p className={styles.contentNews}>{noticias.content}</p>
+                  <Link href={noticias.url}>
                     <p className={styles.readMore}>Ler mais</p>
-                </Link>
-              </section>
-            </div>
-          </>
-        ))}
+                  </Link>
+                </section>
+              </div>
+            </>
+          ))}
+        </div>
       </div>
     </div>
   );
