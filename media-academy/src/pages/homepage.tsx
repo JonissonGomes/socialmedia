@@ -182,7 +182,7 @@ const HomePage: NextPage = () => {
 
           <div className={styles.newsFasterBox}>
             <p className={styles.titleFastHeader}>Notícias rápidas</p>
-              {fastNews.map((newsFast, index) => (
+              {fastNews.slice(0,5).map((newsFast, index) => (
                 <>
                   <div key={index} className={styles.newsFaster}>
                     <section className={styles.newsContent}>
