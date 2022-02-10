@@ -53,12 +53,12 @@ const Home: NextPage = () => {
       .get(`${request}`)
       .then((response) => {
         setFastNews(response.data.articles);
-        setSearch('');
+        setSearch("");
       })
       .catch((err) => {
         console.error("ops! ocorreu um erro : " + err);
       });
-  }
+  };
 
   const handleChange = (event: {
     target: { value: SetStateAction<string> };
@@ -73,7 +73,7 @@ const Home: NextPage = () => {
       ano = dateParam.getFullYear();
 
     return `${dia}/${mes}/${ano}`;
-  }
+  };
   return (
     <div>
       <div className={styles.header}>
@@ -122,13 +122,15 @@ const Home: NextPage = () => {
 
       <div className={styles.navBar}>
         <section className={styles.logo}>
-          <Link href={"/"}>
+          <Link href={"/home"}>
             <Image src={logoGlobo} height={32} width={32} />
           </Link>
         </section>
 
         <section className={styles.logo}>
-          <p className={styles.fakeG1}>G1</p>
+          <Link href={"/home"}>
+            <p className={styles.fakeG1}>G1</p>
+          </Link>
         </section>
 
         <section className={styles.logo}>
@@ -185,7 +187,9 @@ const Home: NextPage = () => {
                   <div key={index} className={styles.newsFaster}>
                     <section className={styles.newsContent}>
                       <p className={styles.titleFastNews}>{newsFast.title}</p>
-                      <p className={styles.authorFastNews}>{newsFast.author ? newsFast.author : 'Redator da globo'}</p>
+                      <p className={styles.authorFastNews}>
+                        {newsFast.author ? newsFast.author : "Redator da globo"}
+                      </p>
                       <p className={styles.dateFastNews}>
                         {formatDate(newsFast.publishedAt)}
                       </p>
