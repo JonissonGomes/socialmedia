@@ -21,7 +21,6 @@
     font-size: 8px;
 }
 
-
 .colorBlue {
     color: blue;
     font-size: 16px;
@@ -30,7 +29,6 @@
     margin-right: 12px;
     cursor: pointer;
 }
-
 
 .colorBrown {
     color: brown;
@@ -80,6 +78,7 @@
     font-size: 8pt;
     margin-left: 10px;
     margin-right: 10px;
+    cursor: pointer;
 }
 
 .optionsButton {
@@ -87,6 +86,7 @@
     padding: 0;
     border: none;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 
