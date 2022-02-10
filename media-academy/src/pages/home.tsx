@@ -40,20 +40,20 @@ const Home: NextPage = () => {
       .then((response) => {
         console.log("Informações encontradas");
         setFastNews(response.data.articles);
-        console.log(response.data.articles);
       })
       .catch((err) => {
         console.error("ops! ocorreu um erro : " + err);
       });
   }, []);
 
-  function searchTopic(word: string) {
+  const searchTopic = (word: string) => {
     let newParam = `q=${word}&`;
     let request = `https://newsapi.org/v2/everything?${newParam}sources=globo&sortBy=popularity&apiKey=55a1f8015d004ad1905a7a44f4c152e9`;
     api
       .get(`${request}`)
       .then((response) => {
         setFastNews(response.data.articles);
+        setSearch('');
       })
       .catch((err) => {
         console.error("ops! ocorreu um erro : " + err);
@@ -66,7 +66,7 @@ const Home: NextPage = () => {
     setSearch(event.target.value);
   };
 
-  function formatDate() {
+  const formatDate = () => {
     let dateParam = new Date(),
       dia = dateParam.getDate().toString().padStart(2, "0"),
       mes = (dateParam.getMonth() + 1).toString().padStart(2, "0"),
@@ -78,33 +78,33 @@ const Home: NextPage = () => {
     <div>
       <div className={styles.header}>
         <section className={styles.boxUrl}>
-          <Link href={"/"}>
+          <Link href={"https://www.globo.com"}>
             <p className={styles.colorBlue}>globo.com</p>
           </Link>
           <p className={styles.divisor}>|</p>
-          <Link href={"/"}>
+          <Link href={"https://g1.globo.com"}>
             <p className={styles.colorBrown}>g1</p>
           </Link>
           <p className={styles.divisor}>|</p>
-          <Link href={"/"}>
+          <Link href={"https://ge.globo.com"}>
             <p className={styles.colorGreen}>ge</p>
           </Link>
           <p className={styles.divisor}>|</p>
-          <Link href={"/"}>
+          <Link href={"https://gshow.globo.com"}>
             <p className={styles.colorOrange}>gshow</p>
           </Link>
           <p className={styles.divisor}>|</p>
-          <Link href={"/"}>
+          <Link href={"https://globoplay.globo.com"}>
             <p className={styles.colorBlue}>vídeos</p>
           </Link>
           <p className={styles.divisor}>|</p>
-          <Link href={"/"}>
+          <Link href={"https://oglobo.globo.com"}>
             <p className={styles.colorDarkBlue}>o globo</p>
           </Link>
         </section>
 
         <section className={styles.boxRight}>
-          <Link href={"/home"}>
+          <Link href={"https://vitrine.globo.com/?origemId=148"}>
             <p className={styles.options}>ASSINE JÁ</p>
           </Link>
 
