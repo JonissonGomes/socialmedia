@@ -93,7 +93,6 @@
     cursor: pointer;
 }
 
-
 .navBar {
     background-color: crimson;
     width: 100%;
@@ -102,7 +101,7 @@
     display: flex;
     align-items: center;
     position: sticky;
-    top: 5%;
+    top: 5.1%;
 }
 
 .logo {
