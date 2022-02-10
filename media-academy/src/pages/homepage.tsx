@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { NextPage } from "next";
 import { SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
@@ -122,13 +123,13 @@ const HomePage: NextPage = () => {
 
       <div className={styles.navBar}>
         <section className={styles.logo}>
-          <Link href={"/home"}>
+          <Link href={"/"}>
             <Image src={logoGlobo} height={32} width={32} />
           </Link>
         </section>
 
         <section className={styles.logo}>
-          <Link href={"/home"}>
+          <Link href={"/"}>
             <p className={styles.fakeG1}>G1</p>
           </Link>
         </section>
@@ -152,7 +153,7 @@ const HomePage: NextPage = () => {
       </div>
 
       <div className={styles.contentMain}>
-        <h1 className={styles.topic}>Notícias de hoje</h1>
+        <h1 className={styles.topic}>Notícias atuais</h1>
 
         <hr className={styles.separator} />
         <div className={styles.contentBox}>
@@ -181,7 +182,6 @@ const HomePage: NextPage = () => {
 
           <div className={styles.newsFasterBox}>
             <p className={styles.titleFastHeader}>Notícias rápidas</p>
-            <div>
               {fastNews.map((newsFast, index) => (
                 <>
                   <div key={index} className={styles.newsFaster}>
@@ -195,13 +195,12 @@ const HomePage: NextPage = () => {
                       </p>
                       <p className={styles.contentNews}>{newsFast.content}</p>
                       <Link href={newsFast.url}>
-                        <p className={styles.readMore}>Ler mais</p>
+                        <p className={styles.readMoreFastNews}>Ler mais</p>
                       </Link>
                     </section>
                   </div>
                 </>
               ))}
-            </div>
           </div>
         </div>
       </div>
