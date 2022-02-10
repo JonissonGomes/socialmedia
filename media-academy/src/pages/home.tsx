@@ -81,7 +81,9 @@ const Home: NextPage = () => {
 
       <div className={styles.navBar}>
         <section className={styles.logo}>
-          <Image src={logoGlobo} height={46} width={46} />
+            <Link href={"/"}>
+                <Image src={logoGlobo} height={32} width={32} />
+            </Link>
         </section>
 
         <section className={styles.logo}>
