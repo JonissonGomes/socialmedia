@@ -9,18 +9,37 @@ import styles from "../styles/homepage.module.css";
 
 const Home: NextPage = () => {
   const [listNews, setListNews] = useState([]);
+  const [fastNews, setFastNews] = useState([]);
+
   const [search, setSearch] = useState("");
 
   const [urlApi, setUrlApi] = useState(
     "https://newsapi.org/v2/everything?sources=globo&sortBy=popularity&apiKey=55a1f8015d004ad1905a7a44f4c152e9"
   );
 
+  const [urlApiFast, setUrlApiFast] = useState(
+    "https://newsapi.org/v2/everything?q=brasil&sources=globo&apiKey=55a1f8015d004ad1905a7a44f4c152e9"
+  );
+
+  // Main content
   useEffect(() => {
     api
       .get(`${urlApi}`)
       .then((response) => {
-        console.log("Informações encontradas");
         setListNews(response.data.articles);
+      })
+      .catch((err) => {
+        console.error("ops! ocorreu um erro : " + err);
+      });
+  }, []);
+
+  // Fast News
+  useEffect(() => {
+    api
+      .get(`${urlApiFast}`)
+      .then((response) => {
+        console.log("Informações encontradas");
+        setFastNews(response.data.articles);
         console.log(response.data.articles);
       })
       .catch((err) => {
@@ -34,7 +53,7 @@ const Home: NextPage = () => {
     api
       .get(`${request}`)
       .then((response) => {
-        setListNews(response.data.articles);
+        setFastNews(response.data.articles);
       })
       .catch((err) => {
         console.error("ops! ocorreu um erro : " + err);
@@ -135,26 +154,51 @@ const Home: NextPage = () => {
 
         <hr className={styles.separator} />
         <div className={styles.contentBox}>
-          {listNews.map((noticias, index) => (
-            <>
-              <div key={index} className={styles.news}>
-                <section className={styles.imageContent}>
-                  <Image src={noticias.urlToImage} width={300} height={200} />
-                </section>
-                <section className={styles.newsContent}>
-                  <p className={styles.titleNews}>{noticias.title}</p>
-                  <p className={styles.author}>{noticias.author}</p>
-                  <p className={styles.dateNews}>
-                    {formatDate(noticias.publishedAt)}
-                  </p>
-                  <p className={styles.contentNews}>{noticias.content}</p>
-                  <Link href={noticias.url}>
-                    <p className={styles.readMore}>Ler mais</p>
-                  </Link>
-                </section>
-              </div>
-            </>
-          ))}
+          <div className={styles.newsMain}>
+            {listNews.map((noticias, index) => (
+              <>
+                <div key={index} className={styles.news}>
+                  <section className={styles.imageContent}>
+                    <Image src={noticias.urlToImage} width={300} height={200} />
+                  </section>
+                  <section className={styles.newsContent}>
+                    <p className={styles.titleNews}>{noticias.title}</p>
+                    <p className={styles.author}>{noticias.author}</p>
+                    <p className={styles.dateNews}>
+                      {formatDate(noticias.publishedAt)}
+                    </p>
+                    <p className={styles.contentNews}>{noticias.content}</p>
+                    <Link href={noticias.url}>
+                      <p className={styles.readMore}>Ler mais</p>
+                    </Link>
+                  </section>
+                </div>
+              </>
+            ))}
+          </div>
+
+          <div className={styles.newsFasterBox}>
+            <p className={styles.titleFastHeader}>Notícias rápidas</p>
+            <div>
+              {fastNews.map((newsFast, index) => (
+                <>
+                  <div key={index} className={styles.newsFaster}>
+                    <section className={styles.newsContent}>
+                      <p className={styles.titleFastNews}>{newsFast.title}</p>
+                      <p className={styles.authorFastNews}>{newsFast.author ? newsFast.author : 'Redator da globo'}</p>
+                      <p className={styles.dateFastNews}>
+                        {formatDate(newsFast.publishedAt)}
+                      </p>
+                      <p className={styles.contentNews}>{newsFast.content}</p>
+                      <Link href={newsFast.url}>
+                        <p className={styles.readMore}>Ler mais</p>
+                      </Link>
+                    </section>
+                  </div>
+                </>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
