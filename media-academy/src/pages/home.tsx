@@ -46,11 +46,15 @@ const Home: NextPage = () => {
           </Link>
           <p className={styles.divisor}>|</p>
           <Link href={"/"}>
-            <p className={styles.colorGreen}>g1</p>
+            <p className={styles.colorBrown}>g1</p>
           </Link>
           <p className={styles.divisor}>|</p>
           <Link href={"/"}>
-            <p className={styles.colorOrange}>ge</p>
+            <p className={styles.colorGreen}>ge</p>
+          </Link>
+          <p className={styles.divisor}>|</p>
+          <Link href={"/"}>
+            <p className={styles.colorOrange}>gshow</p>
           </Link>
           <p className={styles.divisor}>|</p>
           <Link href={"/"}>
