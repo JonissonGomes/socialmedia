@@ -1,42 +1,39 @@
 import { NextPage } from "next";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import * as React from "react";
 
+import api from "../utils/connectApi/axios";
 import logoGlobo from "../utils/images/logo-academy.png";
 import styles from "../styles/homepage.module.css";
 
 const Home: NextPage = () => {
 
-    const noticias = [
-        {
-            title: "Dev da delete sem where e acaba causando um acidente",
-            describe: "O jovem possuia apenas 22 anos e hoje está procurando onde esconder a cabeça",
-            date: '09/02/2022'
-        },
-        {
-            title: "Região metropolitana recebe novos eventos para desmistificar o flutter",
-            describe: "Aparentemente o novo surto do novo framework está causando complicações",
-            date: '09/02/2022'
-        },
-        {
-            title: "Após estourar tempo limite do projeto, estudante acaba indo tomar energético para melhorar sua performance",
-            describe: "O adolecente procurou utilizar os mais diversos métodos quando acidentalmente esqueceu de enviar seu projeto no gmail",
-            date: '09/02/2022'
-        },
-        {
-            title: "Região metropolitana recebe novos eventos para desmistificar o flutter",
-            describe: "Aparentemente o novo surto do novo framework está causando complicações",
-            date: '09/02/2022'
-        },
-        {
-            title: "Após estourar tempo limite do projeto, estudante acaba indo tomar energético para melhorar sua performance",
-            describe: "O adolecente procurou utilizar os mais diversos métodos quando acidentalmente esqueceu de enviar seu projeto no gmail",
-            date: '09/02/2022'
-        },
-    ]
+  const [listNews, setListNews] = useState([]);
 
+  useEffect(() => {
+    api
+      .get(
+        `https://newsapi.org/v2/everything?sources=globo&sortBy=popularity&apiKey=55a1f8015d004ad1905a7a44f4c152e9`
+      )
+      .then((response) => {
+        console.log("Informações encontradas");
+        setListNews(response.data.articles);
+        console.log(response.data.articles);
+      })
+      .catch((err) => {
+        console.error("ops! ocorreu um erro : " + err);
+      });
+  }, []);
 
+  function formatDate() {
+    let dateParam = new Date(),
+      dia = dateParam.getDate().toString().padStart(2, "0"),
+      mes = (dateParam.getMonth() + 1).toString().padStart(2, "0"),
+      ano = dateParam.getFullYear();
+
+    return `${dia}/${mes}/${ano}`;
+  }
   return (
     <div>
       <div className={styles.header}>
@@ -85,9 +82,9 @@ const Home: NextPage = () => {
 
       <div className={styles.navBar}>
         <section className={styles.logo}>
-            <Link href={"/"}>
-                <Image src={logoGlobo} height={32} width={32} />
-            </Link>
+          <Link href={"/"}>
+            <Image src={logoGlobo} height={32} width={32} />
+          </Link>
         </section>
 
         <section className={styles.logo}>
@@ -100,21 +97,29 @@ const Home: NextPage = () => {
       </div>
 
       <div className={styles.contentMain}>
-          <h1 className={styles.topic}>Notícias de dev</h1>
+        <h1 className={styles.topic}>Notícias de hoje</h1>
 
-          <hr className={styles.separator} />
-        {
-              noticias.map( 
-                  (noticias) => 
-                      <>
-                        <div className={styles.news}>
-                            <p className={styles.titleNews}>{noticias.title}</p>
-                            <p className={styles.describeNews}>{noticias.describe}</p>
-                            <p className={styles.dateNews}>{noticias.date}</p>
-                        </div>
-                    </>
-                )
-            }
+        <hr className={styles.separator} />
+        {listNews.map((noticias, index) => (
+          <>
+            <div key={index} className={styles.news}>
+              <section className={styles.imageContent}>
+                <Image src={noticias.urlToImage} width={300} height={200} />
+              </section>
+              <section className={styles.newsContent}>
+                <p className={styles.titleNews}>{noticias.title}</p>
+                <p className={styles.author}>{noticias.author}</p>
+                <p className={styles.dateNews}>
+                  {formatDate(noticias.publishedAt)}
+                </p>
+                <p className={styles.contentNews}>{noticias.content}</p>
+                <Link href={noticias.url}>
+                    <p className={styles.readMore}>Ler mais</p>
+                </Link>
+              </section>
+            </div>
+          </>
+        ))}
       </div>
     </div>
   );
